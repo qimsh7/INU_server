@@ -134,3 +134,5 @@ dmypy.json
 # DB
 INU_DB.py
 *.csv
+
+.DS_Store
