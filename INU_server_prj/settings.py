@@ -37,11 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'main',
     'arch',
     'buck',
     'lttr',
     'sett',
+
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -114,7 +117,7 @@ USE_TZ = False
 
 # 파일 경로 관리
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 
 MEDIA_URL = '/media/'

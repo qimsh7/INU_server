@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  {% block title %}<title>test page</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+{% if Posts %}
+  <div>
+      {% for p in Posts %}
+        <ul>
+            <a>{{ p }} - {{ p.writer }}</a>
+            <p><img src="{{ p.photo.url }}" alt="{{ p.photo }}"></p>
+        </ul>
+      {% endfor %}
+  </div>
+{% else %}
+<div>There's no post</div>
+{% endif %}
+</body>
+</html>

@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from arch.models import Post
+from django.views import generic
 
-# Create your views here.
+def index(request):
+    context = {
+        "Posts": Post.objects.all()
+    }
+    return render(request, "index.html", context=context)
