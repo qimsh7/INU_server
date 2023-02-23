@@ -136,3 +136,6 @@ INU_server_prj/INU_DB.py
 *.csv
 
 .DS_Store
+
+# media file
+_media
