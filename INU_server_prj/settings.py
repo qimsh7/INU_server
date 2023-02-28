@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'sett',
 
     'imagekit',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from arch.models import Post
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import PostSerializer
+from .models import Post
 from django.views import generic
 
 def index(request):
@@ -7,3 +10,10 @@ def index(request):
         "Posts": Post.objects.all()
     }
     return render(request, "index.html", context=context)
+
+class PostListAPI(APIView):
+    def get(self, request):
+        queryset = Post.objects.all()
+        print(queryset)
+        serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)

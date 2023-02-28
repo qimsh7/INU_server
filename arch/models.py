@@ -7,7 +7,7 @@ from uuid import uuid4
 
 # 포스트(데이트)
 class Post(models.Model):
-    title = models.CharField(
+    name = models.CharField(
         max_length=20,
         help_text="Enter the title of the post",
     )
@@ -20,6 +20,8 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
 
     # location
 
@@ -34,8 +36,6 @@ class Post(models.Model):
         upload_to=upload_to_func,
         blank=True,
     )
-    created_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return self.name
