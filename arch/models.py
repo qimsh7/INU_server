@@ -4,26 +4,24 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils import timezone
 from uuid import uuid4
+from main.models import BaseModel
 
 # 포스트(데이트)
-class Post(models.Model):
+class Post(BaseModel):
     name = models.CharField(
         max_length=20,
-        help_text="Enter the title of the post",
     )
     content = models.TextField(
         max_length=200,
-        help_text="Enter a brief content",
     )
     writer = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
         null=True,
     )
-    created_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now=True)
 
-    # location
+
+    # location 외래키로 만들어야 할 듯
 
     def upload_to_func(instance, filename):
         prefix = timezone.now().strftime("%Y/%m/%d")
