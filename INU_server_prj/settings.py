@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'imagekit',
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
