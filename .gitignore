@@ -137,5 +137,8 @@ INU_server_prj/INU_DB.py
 
 .DS_Store
 
-# media file
+# Media File
 _media/
+
+# Secret Keys
+secrets.json

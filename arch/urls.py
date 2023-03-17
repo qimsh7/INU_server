@@ -1,6 +1,10 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from arch import views
+from arch.views import PostListAPI
+
+# router = DefaultRouter()
 
 urlpatterns = [
-    path('', views.index, name="index"), # URL 패턴이 감지되었을 때 호출될 view 함수 index()
+    path('v1/test/', PostListAPI.as_view(), name="test")
 ]
