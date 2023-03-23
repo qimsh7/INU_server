@@ -1,17 +1,16 @@
 import os
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import User
 from django.utils import timezone
 from uuid import uuid4
 from main.models import BaseModel
-
+from INU_server_prj import settings
 
 # 포스트(데이트)
 class Post(BaseModel):
     name = models.CharField(max_length=20)
     content = models.TextField(max_length=500)
-    writer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 
     # location 외래키로 만들어야할 듯
 
