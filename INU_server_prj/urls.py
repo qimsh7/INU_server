@@ -6,7 +6,6 @@ from rest_framework import routers
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from user import views
 
 router = routers.DefaultRouter()
@@ -32,9 +31,6 @@ urlpatterns = [
     path('api/user/', include('allauth.urls')),
     path('api/user/', include('user.urls')),
 
-    path('api-jwt-auth/', obtain_jwt_token),
-    path('api-jwt-auth/refresh/', refresh_jwt_token),
-    path('api-jwt-auth/verify/', verify_jwt_token),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

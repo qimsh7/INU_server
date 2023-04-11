@@ -2,7 +2,7 @@ from django.db import models
 from main.models import BaseModel
 
 # 카테고리
-class Category(models.Model):
+class Category(BaseModel):
     name = models.CharField(max_length=20, null=True)
 
     def __str__(self):

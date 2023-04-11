@@ -4,7 +4,7 @@ from main.models import BaseModel
 from INU_server_prj import settings
 
 # 편지
-class Letter(BaseModel):
+class Letter(models.Model):
     content = models.TextField(max_length=100)
     writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
 

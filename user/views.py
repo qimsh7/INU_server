@@ -1,12 +1,12 @@
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
-
 from user.models import User
 from allauth.socialaccount.models import SocialAccount
 from dj_rest_auth.registration.views import SocialLoginView
-from allauth.socialaccount.providers.kakao import views as kakao_view
+from allauth.socialaccount.providers.kakao.views import KakaoOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.http import JsonResponse
+from django.conf import settings
 import requests
 from rest_framework import status, viewsets, permissions
 from json.decoder import JSONDecodeError
@@ -14,8 +14,11 @@ import json
 import os
 from pathlib import Path
 from drf_yasg.utils import swagger_auto_schema
+
+
 from .serializers import UserSerializer
 
+# state = getattr(settings, 'STATE')
 
 # secret 파일
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,19 +50,21 @@ def kakao_callback(request):
     code = request.GET.get("code")
 
    # access token 요청
-    token_request = requests.get(
+    token_req = requests.get(
         f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={KAKAO_REST_API_KEY}&redirect_uri={KAKAO_REDIRECT_URI}&code={code}")
-    token_response_json = token_request.json()
+    token_res_json = token_req.json()
 
     # error 발생 시 중단
-    error = token_response_json.get("error", None)
+    error = token_res_json.get("error", None)
     if error is not None:
         raise JSONDecodeError(error)
 
     # access token으로 카카오톡 프로필 요청
-    access_token = token_response_json.get("access_token")
+    access_token = token_res_json.get("access_token")
     profile_request = requests.get(
-        "https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"})
+        "https://kapi.kakao.com/v2/user/me",
+        headers={"Authorization": f"Bearer {access_token}"}
+    )
     profile_json = profile_request.json()
     error = profile_json.get("error", None)
     if error is not None:
@@ -72,7 +77,7 @@ def kakao_callback(request):
     print(kakao_account) 참고
     """
     # print(kakao_account)
-    email = kakao_account.get('email')
+    email = kakao_account.get('email', None)
 
     # 이메일 없으면 오류 => 카카오톡 최신 버전에서는 이메일 없이 가입 가능해서 필요시 수정
     if email is None:
@@ -112,7 +117,7 @@ def kakao_callback(request):
         return JsonResponse(accept_json)
 
 
-class KakaoLoginFinish(SocialLoginView):
-    adapter_class = kakao_view.KakaoOAuth2Adapter
+class KakaoLogin(SocialLoginView):
+    adapter_class = KakaoOAuth2Adapter
     client_class = OAuth2Client
     callback_url = KAKAO_REDIRECT_URI
